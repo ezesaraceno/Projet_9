@@ -1,6 +1,5 @@
 import logging
-# import django.shortcuts 
-# import HttpResponse
+from urllib.request import urlopen
 import streamlit as st
 
 import azure.functions as func
@@ -38,11 +37,6 @@ def main(req: func.HttpRequest,recommendation: func.DocumentList) -> func.HttpRe
         json.dumps(req_body),
         mimetype="application/json",
         status_code=200,
-    # return func.HttpResponse({req_body.get(
-    #     recommendation[selected_user].to_json(),
-    #     # json.dumps(recommendation[selected_user]),
-    #     mimetype="application/json",
-    #     status_code=200,
     )})
     
 def get_body(self) -> bytes:
@@ -53,33 +47,15 @@ def get_json(self) -> typing.Any:
 
     
 
-# users = st.number_input('Enter User ID')
 selected_user = st.selectbox( "Type or select a user from the dropdown",('1', '2', '3','4', '5', '11183'))
-# users = clicks["user_id"]
-# selected_user = st.selectbox( "Type or select a user from the dropdown", ("1", "2"))#options=list(users.keys()))
+
 st.write('You selected User_ID #:', int(selected_user))
 
 user_id = int(selected_user)
 
 if st.button("Get Recommendation"):
     with st.spinner("Analyzing the library …"):
-        # st.write(recommendation)
-        rec = main(req = func.HttpRequest, recommendation = func.DocumentList) #(req, recommendation)
-        st.write(rec)
-        # reponse
-        # df = pd.DataFrame(rec)
-        # ratings_sparse = ratings_sparse
-        # prediction = get_predictions(user_id)
-        # st.write(rec)
-        # df = httpRequest(rec)
-        # df
-        # df = pd.DataFrame(df)
-        # df = df.T
-        # df.columns = ['article_id', 'rating']
-        # if dataframe is not None:
-        #     st.table(dataframe)
-
-       
-
-
-
+        API_url = "http://localhost:7071/api/recommendation/" + str(user_id)
+        with urlopen(API_url) as f:
+            API_data = json.loads(f.read())
+        st.write(API_data)
