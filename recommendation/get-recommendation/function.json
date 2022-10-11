@@ -1,31 +1,32 @@
 {
-  "scriptFile": "__init__.py",
   "bindings": [
     {
       "authLevel": "anonymous",
+      "name": "req",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "req",
       "methods": [
         "get",
         "post"
-      ]
+      ],
+      "route":"recommendation/{id}"
     },
     {
+      "name": "$return", 
       "type": "http",
-      "direction": "out",
-      "name": "$return"
+      "direction": "out"
     },
     {
       "type": "cosmosDB",
-      "direction": "in",
-      "name": "recommendation",
+      "name": "recommendation", 
       "databaseName": "Recommendation",
       "collectionName": "UserArticles",
       "connectionStringSetting": "mobileappes_DOCUMENTDB",
+      "direction": "in",            
       "id": "{id}",
       "partitionKey": "{id}"
     }
-  ]
-
+  ], 
+  "disabled": false, 
+  "scriptFile": "__init__.py"
 }
