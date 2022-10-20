@@ -134,5 +134,9 @@ __queuestorage__
 __azurite_db*__.json
 .python_packages
 
-# CSV files
+# Ignored files
+.DS_Store
 *.csv
+
+# Ignore All (xlsx) files
+*.xlsx
